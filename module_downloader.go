@@ -49,8 +49,9 @@ func parseMedia(url string) (*MediaInfo, error) {
 }
 
 func downloadFile(media MediaInfo) (string, error) {
-	normalizeFileName := regexp.MustCompile(`[^[:word:][:punct:]\s]`)
+	normalizeFileName := regexp.MustCompile(`[\\/:*?"<>|]`)
 	newName := normalizeFileName.ReplaceAllString(media.Name, "")
+	log.Printf("[info] (module: download) Normalizing filename... old: %v, new: %v\n", media.Name, newName)
 
 	start := time.Now()
 
@@ -81,7 +82,7 @@ func downloadFile(media MediaInfo) (string, error) {
 					}
 					var percent float64 = float64(size) / float64(media.Size) * 100
 
-					fmt.Printf("\r[info] (module: download) Downloading (%.0f%%)", percent)
+					log.Printf("\r[info] (module: download) Downloading (%.0f%%)", percent)
 				}
 				time.Sleep(time.Second)
 			}
@@ -94,7 +95,7 @@ func downloadFile(media MediaInfo) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Printf("\r[info] (module: download) Finished downloading! (%.0f%%)\n", 100.0)
+	log.Printf("\r[info] (module: download) Finished downloading! (%.0f%%)\n", 100.0)
 
 	pwd, _ := os.Getwd()
 

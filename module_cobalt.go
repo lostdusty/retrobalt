@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"runtime"
 	"strings"
-	"log"
 )
 
 type CobaltResponse struct {
@@ -25,8 +25,8 @@ type CobaltResponse struct {
 }
 
 var (
-	useragent = fmt.Sprintf("Mozilla/4.0 (%v; %v); retrobalt/v1.0.0 (%v; %v); +(https://github.com/lostdusty/retrobalt)", runtime.GOOS, runtime.GOARCH, runtime.Compiler, runtime.Version())
-	client = http.Client{Transport: disableTls()} //Disables TLS certificate verification & allows the client to be re-used.
+	useragent = fmt.Sprintf("Mozilla/4.0 (%v; %v); retrobalt/v1.0.1 (%v; %v); +(https://github.com/lostdusty/retrobalt)", runtime.GOOS, runtime.GOARCH, runtime.Compiler, runtime.Version())
+	client    = http.Client{Transport: disableTls()} //Disables TLS certificate verification & allows the client to be re-used.
 )
 
 func disableTls() http.RoundTripper {
